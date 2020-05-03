@@ -8,7 +8,6 @@ window.addEventListener('DOMContentLoaded', function(){  // фукнция за�
     let timerMinutes = document.querySelector('#timer-minutes');
     let timerSeconds = document.querySelector('#timer-seconds');
 
-
     function getTimeRemaining(){
       let dateStop = new Date(deadline).getTime(); // getTime - перевод в милисекунды
       let dateNow = new Date().getTime(); // получение текущей даты
@@ -20,11 +19,18 @@ window.addEventListener('DOMContentLoaded', function(){  // фукнция за�
       return {timeRemaining, seconds, minutes,hours};
     }
 
+    function formatTime(data) {
+      if (data < 10) {
+        data = '0' + data;
+      }
+      return data;
+    }
+
     let timerId = setInterval( () => {    
       let timer = getTimeRemaining();
-      timerHours.textContent = timer.hours;
-      timerMinutes.textContent = timer.minutes;
-      timerSeconds.textContent = timer.seconds;
+      timerHours.textContent = formatTime(timer.hours);
+      timerMinutes.textContent = formatTime(timer.minutes);
+      timerSeconds.textContent = formatTime(timer.seconds);
       
       if (timer.timeRemaining < 0) {
         clearInterval(timerId);
