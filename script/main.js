@@ -52,34 +52,8 @@ window.addEventListener('DOMContentLoaded', function(){  // фукнция за�
           menu = document.querySelector('menu'),
           closeBtn = document.querySelector('.close-btn'),
           menuItems = menu.querySelectorAll('ul>li');
-    
-    // анимация появления модального окна
 
-    let count = -100;
-    const animate = () => {
-        if (document.documentElement.clientWidth < 768) {
-            menu.style.transform = `translate(0)`;
-            return;
-        }
-        let requestId = requestAnimationFrame(animate);
-        count += 2;
-        menu.style.transform = `translate(${count}%)`;
-        if (count === 0) {
-            cancelAnimationFrame(requestId);
-        }
-    };
-
-    const handlerMenu = (evt) => {
-        evt.preventDefault(); 
-        if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
-          count = -100;
-          animate();
-        } else {
-          if (evt.target.tagName === 'A') {
-            menu.style.transform = `translate(-100%)`;
-          }
-        }  
-    };
+    const handlerMenu = () => menu.classList.toggle('active-menu');
 
 
     btnMenu.addEventListener('click', handlerMenu);
@@ -96,12 +70,31 @@ window.addEventListener('DOMContentLoaded', function(){  // фукнция за�
   const togglePopUp = () => {
     const popup = document.querySelector('.popup'),
           popupBtn = document.querySelectorAll('.popup-btn'),
-          popUpClose = document.querySelector('.popup-close');
+          popUpClose = document.querySelector('.popup-close'),
+          popupContent = popup.querySelector('.popup-content');
 
+    // Popup animation function
+
+    let count = 0;
+    function popupAnimate () {
+
+      if (popupContent.style.left !== '38%') {
+        requestAnimationFrame(popupAnimate);
+        count++;
+        popupContent.style.left = (count * 2) + '%';
+
+        } else {
+            cancelAnimationFrame(popupAnimate);
+        }
+    }
+    
     popupBtn.forEach((elem) => {
     // открытие окна
       elem.addEventListener('click', () => {
         popup.style.display = 'block';
+        if (screen.width > 768) {
+          popupAnimate();
+      } 
       });
     });
     // закрытие
@@ -113,6 +106,8 @@ window.addEventListener('DOMContentLoaded', function(){  // фукнция за�
   togglePopUp();
 
 });
+
+  
 
 
 
