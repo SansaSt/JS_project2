@@ -78,13 +78,15 @@ window.addEventListener('DOMContentLoaded', function(){  // фукнция за�
     let count = 0;
     function popupAnimate () {
 
-      if (popupContent.style.left !== '38%') {
+     // if (popupContent.style.left !== '38%') {
+      if (count <= 20) {
         requestAnimationFrame(popupAnimate);
         count++;
         popupContent.style.left = (count * 2) + '%';
 
         } else {
-            cancelAnimationFrame(popupAnimate);
+          count = 0;
+          cancelAnimationFrame(popupAnimate);
         }
     }
     
@@ -92,7 +94,7 @@ window.addEventListener('DOMContentLoaded', function(){  // фукнция за�
     // открытие окна
       elem.addEventListener('click', () => {
         popup.style.display = 'block';
-        if (screen.width > 768) {
+        if (document.documentElement.clientWidth > 768) {
           popupAnimate();
       } 
       });
