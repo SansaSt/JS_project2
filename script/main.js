@@ -260,12 +260,23 @@ tabs();
 
   slider();
 
+  // переключение фотографий при наведении мыши
+    const commandPhoto = document.querySelectorAll('#command .command__photo');
+
+    commandPhoto.forEach(item => {
+      const photoSrc = item.getAttribute('src');
+      const photoData = item.dataset.img;
+      item.addEventListener('mouseenter', event => event.target.src = photoData);
+      item.addEventListener('mouseleave', event => event.target.src = photoSrc);
+    });
+
+  // запрет ввода букв
+    const inputs = document.querySelectorAll('input.calc-item');
+        inputs.forEach(item => {
+          item.addEventListener('input', e => e.target.value = e.target.value.replace(/\D/g, ''));
+        });
+
 });
 
-
-
-
-
-  
 
 
