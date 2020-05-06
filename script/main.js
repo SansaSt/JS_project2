@@ -78,12 +78,13 @@ window.addEventListener('DOMContentLoaded', function(){  // фукнция за�
     let count = 0;
     function popupAnimate () {
 
-      if (popupContent.style.left !== '38%') {
+      if (count <= 20) {
         requestAnimationFrame(popupAnimate);
         count++;
         popupContent.style.left = (count * 2) + '%';
 
         } else {
+          count = 0;
             cancelAnimationFrame(popupAnimate);
         }
     }
