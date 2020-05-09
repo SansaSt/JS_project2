@@ -330,14 +330,41 @@ tabs();
         countSum();
       }
 
-
     });
   };
 
-
   calc(100); // при вызове калькулятора передаем цену, от которой будем отталкиваться
 
+  // Send-ajax-form
 
+  const sendForm = () => {
+    const errorMessage = 'Что-то пошло не так',
+          loadMessage = 'Загрузка...',
+          successMessage = 'Спасибо, мы скоро с вами свяжемся!';
+
+    const form = document.getElementById('form1');
+    const statusMessage = document.createElement('div');
+    statusMessage.style.cssText = 'fort-size: 2rem';
+  
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form.appendChild(statusMessage);
+
+      // запрос к серверу
+      const request = new XMLHttpRequest();
+      request.open('POST', './server.php');
+      request.setRequestHeader('Content-Type', 'multipart/form-data');
+
+      // объект FormData будет содержать все данные, которые ввел пользователь
+      const formData = new FormData(form);
+
+      // открытие соединение
+      request.send(formData);
+    });
+
+  };
+
+  sendForm();
 });
 
 
