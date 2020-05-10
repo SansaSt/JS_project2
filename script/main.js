@@ -340,31 +340,75 @@ tabs();
   const sendForm = () => {
     const errorMessage = 'Что-то пошло не так',
           loadMessage = 'Загрузка...',
-          successMessage = 'Спасибо, мы скоро с вами свяжемся!';
-
-    const form = document.getElementById('form1');
+          successMessage = 'Спасибо, мы скоро с вами свяжемся!',
+          forms = document.querySelectorAll('form');
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'fort-size: 2rem';
-  
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      form.appendChild(statusMessage);
 
-      // запрос к серверу
+    const postData = (body, outputData, errorData) => {
       const request = new XMLHttpRequest();
+
+      request.addEventListener('readystatechange', () => {
+        if (request.readyState !== 4) {
+          return;
+        }
+        if (request.status === 200) {
+          outputData();
+        } else {
+          errorData(request.status);
+
+        }
+      });
       request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'multipart/form-data');
+      request.setRequestHeader('Content-Type', 'application/json');
 
-      // объект FormData будет содержать все данные, которые ввел пользователь
-      const formData = new FormData(form);
+      request.send(JSON.stringify(body));
+    };
+    forms.forEach(form => {
+      form.addEventListener('input', (evt) => {
+        let target = evt.target;
+        console.log(target);
+        if (target.name === 'user_phone') {
+          target.value = target.value.replace(/[^\+\d]/g, '');
+        }
 
-      // открытие соединение
-      request.send(formData);
+        if (target.name === 'user_name' || target.name === 'user_message') {
+          target.value = target.value.replace(/[^а-я ]/gi, '');
+        }
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        form.appendChild(statusMessage);
+        statusMessage.style.cssText = `font-size: 2rem;
+              color: #fff; `;
+        const formData = new FormData(form);
+        statusMessage.textContent = loadMessage;
+
+       
+
+        let body = {};
+        for (let val of formData.entries()) {
+          body[val[0]] = val[1];
+        }
+        postData(body,
+          () => {
+            statusMessage.style.cssText = `font-size: 2rem;
+              color: green; `;
+            statusMessage.textContent = successMessage;
+            form.reset();
+          },
+          (error) => {
+            statusMessage.style.cssText = `font-size: 2rem;
+              color: red; `;
+            statusMessage.textContent = errorMessage;
+          });
+      });
     });
-
   };
 
   sendForm();
+
 });
 
 
