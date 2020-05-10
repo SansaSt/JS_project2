@@ -345,29 +345,29 @@ tabs();
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'fort-size: 2rem';
 
-    const postData = (body, outputData, errorData) => {
-      const request = new XMLHttpRequest();
-
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState !== 4) {
-          return;
-        }
-        if (request.status === 200) {
-          outputData();
-        } else {
-          errorData(request.status);
-
-        }
+    const postData = (body) => {
+      return new Promise ((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.addEventListener('readystatechange', () => {
+          if (request.readyState !== 4) {
+            return;
+          }
+          if (request.status === 200) {
+           resolve();
+          } else {
+           reject(request.status);
+          }
+        });
+        request.open('POST', './server.php');
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify(body));
       });
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'application/json');
 
-      request.send(JSON.stringify(body));
+
     };
     forms.forEach(form => {
       form.addEventListener('input', (evt) => {
         let target = evt.target;
-        console.log(target);
         if (target.name === 'user_phone') {
           target.value = target.value.replace(/[^\+\d]/g, '');
         }
@@ -377,6 +377,7 @@ tabs();
         }
       });
 
+
       form.addEventListener('submit', (event) => {
         event.preventDefault();
         form.appendChild(statusMessage);
@@ -385,30 +386,34 @@ tabs();
         const formData = new FormData(form);
         statusMessage.textContent = loadMessage;
 
-       
-
         let body = {};
         for (let val of formData.entries()) {
           body[val[0]] = val[1];
         }
-        postData(body,
-          () => {
+
+        const outputData = () => {
             statusMessage.style.cssText = `font-size: 2rem;
               color: green; `;
             statusMessage.textContent = successMessage;
             form.reset();
-          },
-          (error) => {
+        };
+
+        const error = () => {
             statusMessage.style.cssText = `font-size: 2rem;
               color: red; `;
             statusMessage.textContent = errorMessage;
-          });
+        };
+
+
+        postData(body)
+          .then(outputData)
+          .catch(error);
+
       });
     });
   };
 
   sendForm();
-
 });
 
 
