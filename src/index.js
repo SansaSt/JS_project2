@@ -8,23 +8,25 @@ import slider from './modules/slider';
 import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 
-// Timer
-countTimer('5 may 2020');
+window.addEventListener('DOMContentLoaded', () => {
+  // Timer
+  countTimer('13 may 2020');
 
-// Menu
-toggleMenu();
+  // Menu
+  toggleMenu();
 
-// Popup
-togglePopUp();
+  // Popup
+  togglePopUp();
 
-// Табы
-tabs();
+  // Табы
+  tabs();
 
-// Slider
-slider();
+  // Slider
+  slider();
 
-// Calculator 
-calc(100); // при вызове калькулятора передаем цену, от которой будем отталкиваться
+  // Calculator 
+  calc(100); // при вызове калькулятора передаем цену, от которой будем отталкиваться
 
-// Send-ajax-form
-sendForm();
+  // Send-ajax-form
+  sendForm();
+});

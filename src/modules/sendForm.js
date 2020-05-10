@@ -2,14 +2,19 @@ const sendForm = () => {
   const errorMessage = 'Что-то пошло не так',
         loadMessage = 'Загрузка...',
         successMessage = 'Спасибо, мы скоро с вами свяжемся!',
+        errorInput = 'Минимум 8 цифр!',
         forms = document.querySelectorAll('form');
   const statusMessage = document.createElement('div');
   statusMessage.style.cssText = 'fort-size: 2rem';
 
+  
   const validateTel = (tel) => {
     let str = tel[0].value.replace('+', '').length;
     if (str < 8) {
-      alert('Минимум 8 цифр');
+      str.appendChild(statusMessage);
+      statusMessage.style.cssText = `font-size: 2rem;
+            color: #fff; `;
+      statusMessage.textContent = errorInput;
       return false;
     } else {
       return true;
