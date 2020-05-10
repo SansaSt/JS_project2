@@ -9,10 +9,10 @@ const togglePopUp = () => {
   let count = 0;
   function popupAnimate () {
 
-    if (count <= 20) {
+    if (count <= 14) {
       requestAnimationFrame(popupAnimate);
       count++;
-      popupContent.style.left = (count * 2) + '%';
+      popupContent.style.top = (count * 2) + '%';
 
       } else {
         count = 0;

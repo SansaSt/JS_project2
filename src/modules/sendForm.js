@@ -6,21 +6,7 @@ const sendForm = () => {
         forms = document.querySelectorAll('form');
   const statusMessage = document.createElement('div');
   statusMessage.style.cssText = 'fort-size: 2rem';
-
   
-  const validateTel = (tel) => {
-    let str = tel[0].value.replace('+', '').length;
-    if (str < 8) {
-      str.appendChild(statusMessage);
-      statusMessage.style.cssText = `font-size: 2rem;
-            color: #fff; `;
-      statusMessage.textContent = errorInput;
-      return false;
-    } else {
-      return true;
-    }
-
-  };
 
   forms.forEach(form => {
 
@@ -36,6 +22,21 @@ const sendForm = () => {
         target.value = target.value.replace(/[^а-я ]/gi, '');
       }
     });
+
+
+  const validateTel = (tel) => {
+    let str = tel[0].value.replace('+', '').length;
+    if (str < 8) {
+      form.appendChild(statusMessage);
+      statusMessage.style.cssText = `font-size: 2rem;
+            color: red; `;
+      statusMessage.textContent = errorInput;
+      return false;
+    } else {
+      return true;
+    }
+
+  };
 
     const postData = (body) => {
       console.log('body: ', body);
@@ -96,6 +97,6 @@ const sendForm = () => {
   });
 
 
-};
+}; 
 
 export default sendForm;

@@ -16,7 +16,7 @@ const slider = () => {
   });
 
   const addDots = () => {
-    for (let i = 0; i < slide.length; i++) {
+    for (let i = 0; i < slide.length - 1; i++) {
       const dotElement = document.createElement('li');
       dots.appendChild(dotElement);
       dotElement.classList.add('dot');
