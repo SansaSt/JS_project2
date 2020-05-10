@@ -1,7 +1,6 @@
 'use strict';
 
 import countTimer from './modules/countTimer';
-
 import toggleMenu from './modules/toggleMenu';
 import togglePopUp from './modules/togglePopUp';
 import tabs from './modules/tabs';
