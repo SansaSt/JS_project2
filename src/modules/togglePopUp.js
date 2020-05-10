@@ -34,3 +34,5 @@ const togglePopUp = () => {
     popup.style.display = 'none';
   });
 };
+
+export default togglePopUp;

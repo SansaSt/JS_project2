@@ -37,3 +37,5 @@
     }, 1000);
   
   }
+
+  export default countTimer;

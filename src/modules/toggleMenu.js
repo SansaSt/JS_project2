@@ -14,3 +14,5 @@ const toggleMenu = () => {
   // нажатие на пункты меню закрывают меню
   menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
 };
+
+export default toggleMenu;
