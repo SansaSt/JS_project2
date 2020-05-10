@@ -42,5 +42,5 @@ window.addEventListener('DOMContentLoaded', function(){  // фукнция за�
   
   }
 
-  countTimer('5 may 2020');
+  countTimer('13 may 2020');
 });
